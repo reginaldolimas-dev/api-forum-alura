@@ -27,4 +27,9 @@ public class UsuarioPerfilEntity {
     @JoinColumn(name = "perfil_id")
     private PerfilEntity perfil;
 
+    public UsuarioPerfilEntity(UsuarioEntity usuario, PerfilEntity perfil) {
+        this.usuario = usuario;
+        this.perfil = perfil;
+    }
+
 }
