@@ -4,9 +4,10 @@ CREATE TABLE topico (
                         mensagem TEXT,
                         data_criacao DATETIME NOT NULL,
                         status VARCHAR(20),
-                        autor VARCHAR(100),
+                        autor_id BIGINT NOT NULL,
                         curso_id BIGINT,
                         PRIMARY KEY (id),
                         KEY fk_curso (curso_id),
-                        CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES curso (id)
+                        CONSTRAINT fk_curso FOREIGN KEY (curso_id) REFERENCES curso (id),
+                        CONSTRAINT fk_autor_id FOREIGN KEY (autor_id) REFERENCES usuario(id)
 );

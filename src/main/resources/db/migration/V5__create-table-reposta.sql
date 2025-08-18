@@ -3,9 +3,10 @@ CREATE TABLE resposta (
     mensagem text,
     topico_id bigint DEFAULT NULL,
     dataCriacao datetime NOT NULL,
-    autor varchar(100) DEFAULT NULL,
+    autor_id bigint DEFAULT NULL,
     solucao tinyint(1) DEFAULT NULL,
     PRIMARY KEY (`id`),
     KEY fk_topico (topico_id),
-    CONSTRAINT fk_topico FOREIGN KEY (topico_id) REFERENCES topico (id)
+    CONSTRAINT fk_topico FOREIGN KEY (topico_id) REFERENCES topico (id),
+    CONSTRAINT fk_autor FOREIGN KEY (autor_id) REFERENCES usuario(id)
 )
