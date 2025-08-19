@@ -7,6 +7,8 @@ import br.com.forum.api_forum_alura.domain.entity.UsuarioEntity;
 import br.com.forum.api_forum_alura.domain.repository.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +22,21 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public TopicoEntity cadastrar(@RequestBody @Valid TopicoCadastroDTO dados) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid TopicoCadastroDTO dados) {
+
+        var topicoExiste = topicoRepository.existsByTituloAndMensagem(dados.titulo(), dados.mensagem());
+
+        if (topicoExiste) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body("Tópico já cadastrado com o mesmo título e mensagem.");
+        }
 
         UsuarioEntity autorEntidade = new UsuarioEntity(dados.autorId());
         CursoEntity cursoEntidade = new CursoEntity(dados.cursoId());
 
         TopicoEntity topico = new TopicoEntity(dados.titulo(), dados.mensagem(), autorEntidade, cursoEntidade);
-        return topicoRepository.save(topico);
+        TopicoEntity topicoSalvo = topicoRepository.save(topico);
+        return ResponseEntity.status(HttpStatus.CREATED).body(topicoSalvo);
     }
 }
