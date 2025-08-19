@@ -1,5 +1,6 @@
 package br.com.forum.api_forum_alura.domain.entity;
 
+import br.com.forum.api_forum_alura.domain.dto.TopicoCadastroDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -40,5 +41,22 @@ public class TopicoEntity {
         this.mensagem = mensagem;
         this.autor = autor;
         this.curso = curso;
+    }
+
+    public void atualizarInformacoes(TopicoCadastroDTO dados) {
+        if (dados.titulo() != null) {
+            this.titulo = dados.titulo();
+        }
+        if (dados.mensagem() != null) {
+            this.mensagem = dados.mensagem();
+        }
+        if (dados.autorId() != null) {
+            this.autor = new UsuarioEntity(dados.autorId());
+        }
+
+        if (dados.cursoId() != null) {
+            this.curso = new CursoEntity(dados.cursoId());
+        }
+
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,7 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid TopicoCadastroDTO dados) {
 
         var topicoExiste = topicoRepository.existsByTituloAndMensagem(dados.titulo(), dados.mensagem());
@@ -58,6 +60,20 @@ public class TopicoController {
         if (topico.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(new TopicoDetalhadoDTO(topico.get()));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody @Valid TopicoCadastroDTO dados) {
+        var topico = topicoRepository.findById(id);
+
+        if (topico.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        topico.get().atualizarInformacoes(dados);
+
         return ResponseEntity.ok(new TopicoDetalhadoDTO(topico.get()));
     }
 }
