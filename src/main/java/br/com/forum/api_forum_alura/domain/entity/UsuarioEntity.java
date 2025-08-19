@@ -29,6 +29,10 @@ public class UsuarioEntity {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<UsuarioPerfilEntity> usuarioPerfis = new ArrayList<>();
 
+    public UsuarioEntity(Long id) {
+        this.id = id;
+    }
+
     public List<PerfilEntity> getPerfis() {
         return usuarioPerfis.stream()
                 .map(UsuarioPerfilEntity::getPerfil)

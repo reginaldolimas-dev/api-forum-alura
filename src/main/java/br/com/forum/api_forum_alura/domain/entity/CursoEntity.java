@@ -20,4 +20,8 @@ public class CursoEntity {
     private String nome;
 
     private String categoria;
+
+    public CursoEntity(Long id) {
+        this.id = id;
+    }
 }

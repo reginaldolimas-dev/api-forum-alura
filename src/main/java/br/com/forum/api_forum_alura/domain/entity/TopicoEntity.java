@@ -32,7 +32,13 @@ public class TopicoEntity {
     private CursoEntity curso;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "autor_id")
     private UsuarioEntity autor;
 
+    public TopicoEntity(String titulo, String mensagem, UsuarioEntity autor, CursoEntity curso) {
+        this.titulo = titulo;
+        this.mensagem = mensagem;
+        this.autor = autor;
+        this.curso = curso;
+    }
 }
