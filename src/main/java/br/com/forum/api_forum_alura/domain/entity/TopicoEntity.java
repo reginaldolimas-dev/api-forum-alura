@@ -27,11 +27,11 @@ public class TopicoEntity {
 
     private String status;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "curso_id")
     private CursoEntity curso;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "autor_id")
     private UsuarioEntity autor;
 

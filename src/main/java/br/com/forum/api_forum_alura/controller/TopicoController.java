@@ -1,18 +1,20 @@
 package br.com.forum.api_forum_alura.controller;
 
 import br.com.forum.api_forum_alura.domain.dto.TopicoCadastroDTO;
+import br.com.forum.api_forum_alura.domain.dto.TopicoDetalhadoDTO;
 import br.com.forum.api_forum_alura.domain.entity.CursoEntity;
 import br.com.forum.api_forum_alura.domain.entity.TopicoEntity;
 import br.com.forum.api_forum_alura.domain.entity.UsuarioEntity;
 import br.com.forum.api_forum_alura.domain.repository.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/topicos")
@@ -38,5 +40,15 @@ public class TopicoController {
         TopicoEntity topico = new TopicoEntity(dados.titulo(), dados.mensagem(), autorEntidade, cursoEntidade);
         TopicoEntity topicoSalvo = topicoRepository.save(topico);
         return ResponseEntity.status(HttpStatus.CREATED).body(topicoSalvo);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> listar(@PageableDefault(size = 10, sort = "dataCriacao", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<TopicoEntity> topicosEntidade = topicoRepository.findAll(pageable);
+
+        Page<TopicoDetalhadoDTO> modelos = topicosEntidade.map(TopicoDetalhadoDTO::new);
+
+        return ResponseEntity.ok(modelos);
     }
 }
