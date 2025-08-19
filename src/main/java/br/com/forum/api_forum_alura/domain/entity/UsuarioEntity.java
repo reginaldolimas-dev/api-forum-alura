@@ -1,7 +1,5 @@
-package br.com.forum.api_forum_alura.domain.usuario;
+package br.com.forum.api_forum_alura.domain.entity;
 
-import br.com.forum.api_forum_alura.domain.perfil.PerfilEntity;
-import br.com.forum.api_forum_alura.domain.usuarioPerfil.UsuarioPerfilEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

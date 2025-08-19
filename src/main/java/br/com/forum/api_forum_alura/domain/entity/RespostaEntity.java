@@ -1,6 +1,5 @@
-package br.com.forum.api_forum_alura.domain.resposta;
+package br.com.forum.api_forum_alura.domain.entity;
 
-import br.com.forum.api_forum_alura.domain.topico.TopicoEntity;
 import jakarta.persistence.*;
 
 @Entity
