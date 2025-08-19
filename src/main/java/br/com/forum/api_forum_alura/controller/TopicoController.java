@@ -51,4 +51,13 @@ public class TopicoController {
 
         return ResponseEntity.ok(modelos);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        var topico = topicoRepository.findById(id);
+        if (topico.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new TopicoDetalhadoDTO(topico.get()));
+    }
 }
