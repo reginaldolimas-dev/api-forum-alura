@@ -6,6 +6,7 @@ import br.com.forum.api_forum_alura.domain.entity.CursoEntity;
 import br.com.forum.api_forum_alura.domain.entity.TopicoEntity;
 import br.com.forum.api_forum_alura.domain.entity.UsuarioEntity;
 import br.com.forum.api_forum_alura.domain.repository.TopicoRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
     @Autowired
